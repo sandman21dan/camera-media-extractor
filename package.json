@@ -1,0 +1,21 @@
+{
+  "name": "camera-media-extractor",
+  "version": "1.0.0",
+  "description": "A media extractor from removable media",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Perez",
+  "license": "ISC",
+  "dependencies": {
+    "randomstring": "^1.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.6",
+    "@types/randomstring": "^1.1.6",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.4"
+  }
+}
