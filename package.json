@@ -5,14 +5,20 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "Daniel Perez",
   "license": "ISC",
   "dependencies": {
-    "randomstring": "^1.1.5"
+    "@types/jest": "^24.0.12",
+    "find": "^0.3.0",
+    "jest": "^24.7.1",
+    "randomstring": "^1.1.5",
+    "ts-jest": "^24.0.2"
   },
   "devDependencies": {
+    "@types/find": "^0.2.1",
     "@types/node": "^11.13.6",
     "@types/randomstring": "^1.1.6",
     "ts-node": "^8.1.0",
