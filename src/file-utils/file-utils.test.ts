@@ -6,7 +6,13 @@ it('finds all regular in a given directory files', (done) => {
 
   findRegularFilesInDir(dirName).then((files) => {
     expect(files.length).toEqual(20);
-    expect(files).toMatchSnapshot();
+
+    // only match filenames to avoid using full directory structures
+    const fileNames = files.map((file) => {
+      return file.split('/').pop();
+    });
+
+    expect(fileNames).toMatchSnapshot();
     done();
   });
 });
