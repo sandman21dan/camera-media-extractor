@@ -22,6 +22,7 @@
     "find": "^0.3.0",
     "jest": "^24.7.1",
     "ora": "^3.4.0",
+    "prompts": "^2.0.4",
     "randomstring": "^1.1.5",
     "ts-jest": "^24.0.2",
     "yargs": "^13.2.2"
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/find": "^0.2.1",
     "@types/node": "^11.13.6",
+    "@types/prompts": "^2.4.0",
     "@types/randomstring": "^1.1.6",
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",

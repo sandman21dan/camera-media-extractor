@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import ora from 'ora';
+import prompts from 'prompts';
 import { findRegularFilesInDir, getExtensionTypes } from './file-utils';
 
 export function copyFiles(src: string, dest: string, dryRun: boolean) {
@@ -17,5 +18,12 @@ export function copyFiles(src: string, dest: string, dryRun: boolean) {
     fileTypes.forEach((extension) => {
       console.log(extension);
     });
+
+    prompts({
+      type: 'multiselect',
+      name: 'value',
+      message: 'Choose file types to copy',
+      choices: fileTypes.map((type) => ({ title: type, value: type })),
+    }).then();
   });
 }
