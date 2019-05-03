@@ -1,30 +1,18 @@
-import * as path from 'path';
-import * as find from 'find';
+#!/usr/bin/env node
+import yargs from 'yargs';
 
-find.file(path.resolve(__dirname, '../'), (files) => {
-  files.forEach((fileName) => {
-    console.log('File is: ', fileName);
-  });
+const argv = yargs
+  .version()
+  .alias('version', 'v')
+  .usage('Usage: camera-media-extractor [options] <source> <destination>')
+  .help('help')
+  .alias('help', 'h')
+  .boolean('n')
+  .alias('dry-run', 'n')
+  .describe('n', 'dry run, shows files that would be copied')
+  .example('', 'camera-media-exctractor /mnt/f/photos /username/pictures/')
+  .showHelpOnFail(true)
+  .demandCommand(2)
+  .argv;
 
-  console.log('file types are:');
-  const typesList: string[] = [];
-
-  files.forEach((fileName) => {
-    const ext = path.extname(fileName);
-    if (!typesList.includes(ext)) {
-      typesList.push(ext)
-    }
-  });
-
-  console.log('Extentions', typesList);
-
-  console.log('filtered by type');
-  const extentionFilter = '.md';
-  const filtered = files.filter((fileName) => {
-    if (path.extname(fileName) === extentionFilter) {
-      return fileName
-    }
-  });
-
-  console.log(`${extentionFilter} files: `, filtered);
-});
+console.log(argv);

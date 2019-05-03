@@ -2,8 +2,13 @@
   "name": "camera-media-extractor",
   "version": "1.0.0",
   "description": "A media extractor from removable media",
+  "bin": {
+    "camera-media-extractor": "./dist/index.js"
+  },
   "main": "index.js",
   "scripts": {
+    "build:watch": "tsc --watch",
+    "build": "tsc",
     "start": "ts-node src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -15,7 +20,8 @@
     "find": "^0.3.0",
     "jest": "^24.7.1",
     "randomstring": "^1.1.5",
-    "ts-jest": "^24.0.2"
+    "ts-jest": "^24.0.2",
+    "yargs": "^13.2.2"
   },
   "devDependencies": {
     "@types/find": "^0.2.1",
