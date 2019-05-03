@@ -17,7 +17,7 @@ export function getExtensionTypes(files: string[]): string[] {
   const typesList: string[] = [];
 
   files.forEach((fileName) => {
-    const extension = extname(fileName);
+    const extension = extname(fileName).toLowerCase();
 
     if (!typesList.includes(extension)) {
       typesList.push(extension);

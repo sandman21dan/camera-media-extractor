@@ -32,6 +32,7 @@ describe('getExtensionTypes', () => {
       'landscape.jpg',
       'list.txt',
       'records.csv',
+      'landscape3.JPG',
       'report.txt',
     ].map((fileName) => filePath + fileName);
   });
