@@ -16,8 +16,8 @@ export function findRegularFilesInDir(dirName: string): Promise<string[]> {
 export function getExtensionTypes(files: string[]): string[] {
   const typesList: string[] = [];
 
-  files.forEach((file) => {
-    const extension = extname(file);
+  files.forEach((fileName) => {
+    const extension = extname(fileName);
 
     if (!typesList.includes(extension)) {
       typesList.push(extension);

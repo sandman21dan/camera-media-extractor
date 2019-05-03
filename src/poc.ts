@@ -12,7 +12,7 @@ find.file(path.resolve(__dirname, '../'), (files) => {
   files.forEach((fileName) => {
     const ext = path.extname(fileName);
     if (!typesList.includes(ext)) {
-      typesList.push(ext)
+      typesList.push(ext);
     }
   });
 
@@ -22,7 +22,7 @@ find.file(path.resolve(__dirname, '../'), (files) => {
   const extentionFilter = '.md';
   const filtered = files.filter((fileName) => {
     if (path.extname(fileName) === extentionFilter) {
-      return fileName
+      return fileName;
     }
   });
 
