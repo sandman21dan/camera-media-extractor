@@ -1,4 +1,5 @@
 import { file } from 'find';
+import { extname } from 'path';
 
 export function findRegularFilesInDir(dirName: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -10,4 +11,18 @@ export function findRegularFilesInDir(dirName: string): Promise<string[]> {
       reject(e);
     }
   });
+}
+
+export function getExtensionTypes(files: string[]): string[] {
+  const typesList: string[] = [];
+
+  files.forEach((file) => {
+    const extension = extname(file);
+
+    if (!typesList.includes(extension)) {
+      typesList.push(extension);
+    }
+  });
+
+  return typesList;
 }

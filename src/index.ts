@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import yargs from 'yargs';
+import { copyFiles } from './copy-files';
 
 const argv = yargs
   .version()
@@ -9,10 +10,11 @@ const argv = yargs
   .alias('help', 'h')
   .boolean('n')
   .alias('dry-run', 'n')
+  .default('n', false)
   .describe('n', 'dry run, shows files that would be copied')
   .example('', 'camera-media-exctractor /mnt/f/photos /username/pictures/')
   .showHelpOnFail(true)
   .demandCommand(2)
   .argv;
 
-console.log(argv);
+copyFiles(argv._[0], argv._[1], argv['dry-run'] || false);
