@@ -26,3 +26,13 @@ export function getExtensionTypes(files: string[]): string[] {
 
   return typesList;
 }
+
+export function filterFilesByType(files: string[], fileTypes: string[]): string[] {
+  return files.filter((fileName) => {
+    const fileExt = extname(fileName).toLowerCase();
+    if (fileTypes.includes(fileExt)) {
+      return true;
+    }
+    return false;
+  });
+}
