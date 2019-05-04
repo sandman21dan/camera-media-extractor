@@ -1,4 +1,4 @@
-import { findRegularFilesInDir, getExtensionTypes, filterFilesByType } from '.';
+import { findRegularFilesInDir, getExtensionTypes, filterFilesByType, getFileTypeChoices, MultiSelectChoice } from '.';
 import { resolve } from 'path';
 
 describe('findRegularFilesInDir', () => {
@@ -44,6 +44,38 @@ describe('getExtensionTypes', () => {
       '.png',
       '.csv',
     ]);
+  });
+});
+
+describe('getFileTypeChoices', () => {
+  it('returns prompt multiselect config with given types pre-selected', () => {
+    const fileTypes = [
+      '.txt',
+      '.png',
+      '.jpg',
+      '.mp4',
+      '.js',
+      '.mkv',
+      '.ts',
+    ];
+
+    const preSelectedTypes = [
+      '.jpg',
+      '.mp4',
+      '.mkv',
+    ];
+
+    const expectedChoices: MultiSelectChoice[] = [
+      { title: '.txt', value: '.txt' },
+      { title: '.png', value: '.png' },
+      { title: '.jpg', value: '.jpg', selected: true },
+      { title: '.mp4', value: '.mp4', selected: true },
+      { title: '.js', value: '.js' },
+      { title: '.mkv', value: '.mkv', selected: true },
+      { title: '.ts', value: '.ts' },
+    ];
+
+    expect(getFileTypeChoices(fileTypes, preSelectedTypes)).toEqual(expectedChoices);
   });
 });
 

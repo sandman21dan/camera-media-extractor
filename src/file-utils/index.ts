@@ -27,6 +27,27 @@ export function getExtensionTypes(files: string[]): string[] {
   return typesList;
 }
 
+export interface MultiSelectChoice {
+  title: string;
+  value?: string;
+  selected?: boolean;
+}
+
+export function getFileTypeChoices(fileTypes: string[], preselected: string[] = []): MultiSelectChoice[] {
+  return fileTypes.map((type) => {
+    const choice: MultiSelectChoice = {
+      title: type,
+      value: type,
+    };
+
+    if (preselected.includes(type)) {
+      choice.selected = true;
+    }
+
+    return choice;
+  });
+}
+
 export function filterFilesByType(files: string[], fileTypes: string[]): string[] {
   return files.filter((fileName) => {
     const fileExt = extname(fileName).toLowerCase();
