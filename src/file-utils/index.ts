@@ -29,7 +29,7 @@ export function getExtensionTypes(files: string[]): string[] {
 
 export interface MultiSelectChoice {
   title: string;
-  value?: string;
+  value: string;
   selected?: boolean;
 }
 
