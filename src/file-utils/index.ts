@@ -1,5 +1,7 @@
 import { file } from 'find';
 import { extname } from 'path';
+import { stat } from 'fs';
+import { FileWithStats } from '../types';
 
 export function findRegularFilesInDir(dirName: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -55,5 +57,21 @@ export function filterFilesByType(files: string[], fileTypes: string[]): string[
       return true;
     }
     return false;
+  });
+}
+
+export function getFileStats(fileName: string): Promise<FileWithStats> {
+  return new Promise((resolve, reject) => {
+    stat(fileName, (error, stats) => {
+      if (!error) {
+        resolve({
+          fileName,
+          size: stats.size,
+          birthtime: new Date(stats.birthtime),
+        });
+      } else {
+        reject(error);
+      }
+    });
   });
 }

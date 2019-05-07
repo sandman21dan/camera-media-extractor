@@ -1,5 +1,13 @@
-import { findRegularFilesInDir, getExtensionTypes, filterFilesByType, getFileTypeChoices, MultiSelectChoice } from '.';
+import {
+  findRegularFilesInDir,
+  getExtensionTypes,
+  filterFilesByType,
+  getFileTypeChoices,
+  MultiSelectChoice,
+  getFileStats,
+} from '.';
 import { resolve } from 'path';
+import { FileWithStats } from '../types';
 
 describe('findRegularFilesInDir', () => {
   it('finds all regular in a given directory files', (done) => {
@@ -114,5 +122,31 @@ describe('filterFilesByType', () => {
       `${filePath}landscape3.JPG`,
       `${filePath}video2.mp4`,
     ]);
+  });
+});
+
+describe('getFileStats', () => {
+  it('returns the expected stats map', async (done) => {
+    const file = resolve(__dirname, './test/file_2.txt');
+    const expectedStats: FileWithStats = {
+      fileName: file,
+      size: 1024,
+      birthtime: expect.any(Date),
+    };
+
+    const stats = await getFileStats(file);
+    expect(stats).toEqual(expectedStats);
+    done();
+  });
+
+  it('rejects a promise on failure', (done) => {
+    getFileStats('./non-existant-file.txt').then((stats) => {
+      // fail the test
+      expect(true).toBeFalsy();
+      done();
+    }).catch((error) => {
+      // pass the test
+      done();
+    });
   });
 });

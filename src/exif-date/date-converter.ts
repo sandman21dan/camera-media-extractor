@@ -1,6 +1,6 @@
 /**
  * Converts exif date format into unix format
- * 
+ *
  * @param exifTimestamp Time string in exif format "yyyy:mm:dd hh:mm:ss"
  *
  * @returns Time string in Unix time stamp "yyyy-mm-ddThh:mm:ss.000Z"
