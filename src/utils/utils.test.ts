@@ -1,7 +1,7 @@
 import { FileWithStats, FileWithCreated } from '../types';
 import { replaceDateOnFiles } from './';
 
-it('returns a new array of files with one file with a new date', () => {
+it('returns a new array of files with updated dates', () => {
   const files: FileWithStats[] = [
     { size: 4, fileName: './some-file.txt', birthtime: new Date('2015-05-05T18:00') },
     { size: 5, fileName: './some-file2.txt', birthtime: new Date('2015-05-05T20:00') },
