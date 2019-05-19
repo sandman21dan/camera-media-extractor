@@ -8,3 +8,7 @@ export interface FileWithCreated {
   fileName: string;
   created: Date;
 }
+
+export interface FileWithStatsAndDest extends FileWithStats {
+  dest: string;
+}
