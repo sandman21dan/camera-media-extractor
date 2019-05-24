@@ -12,7 +12,9 @@ import { PreselectedFileTypes } from './configuration';
 import { getExifCreatedDate } from './exif-date';
 import { FileWithCreated } from './types';
 import { replaceDateOnFiles, addDestinationDir } from './utils';
-import { resolve } from 'path';
+import { resolve, basename } from 'path';
+import { copyStatFile } from './file-utils/file-copier';
+import { filterExistingFiles } from './file-reconciliation';
 
 export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   const spinner = ora({
@@ -50,7 +52,7 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   const exifFileDates: FileWithCreated[] = [];
 
   for (const [idx, file] of jpgFiles.entries()) {
-    spinner.text = `Scanning file creation dates ${idx}..${jpgFiles.length}`;
+    spinner.text = `Scanning file creation dates ${idx + 1}..${jpgFiles.length}`;
 
     try {
       const exifDate = await getExifCreatedDate(file);
@@ -67,9 +69,30 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   const filesWithCreated = replaceDateOnFiles(filesWithStats, exifFileDates);
 
   const filesWithDest = addDestinationDir(resolve(dest), filesWithCreated);
-  console.log(`Will copy ${filesWithDest.length} files`);
-  const size = filesWithDest.reduce((acum, file) => {
+  const filteredFilesWithDest = await filterExistingFiles(filesWithDest);
+
+  console.log(`Will copy ${filteredFilesWithDest.length} missing files out of ${filesWithDest.length}`);
+  const size = filteredFilesWithDest.reduce((acum, file) => {
     return acum + file.size;
   }, 0);
   console.log(`For a size of ${Math.floor(size / (1024 * 1024))}MB`);
+
+  if (!dryRun) {
+    spinner.text = 'Copying files';
+    spinner.start();
+
+    for (const [idx, file] of filteredFilesWithDest.entries()) {
+      spinner.text = `Copying files [${basename(file.fileName)}] ${idx + 1}..${filteredFilesWithDest.length}`;
+      await copyStatFile(file);
+    }
+
+    spinner.stop();
+
+    console.log(chalk.green('Finished copying!'));
+  } else {
+    console.log('Dry run, would copy the following');
+    filteredFilesWithDest.forEach((file) => {
+      console.log(file.dest);
+    });
+  }
 }
