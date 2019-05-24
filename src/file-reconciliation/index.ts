@@ -17,7 +17,7 @@ export function filterExistingFiles(files: FileWithStatsAndDest[]): Promise<File
   });
 }
 
-function fileExists(fileName: string): Promise<boolean> {
+export function fileExists(fileName: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     access(fileName, F_OK, (err) => {
       if (!err) {

@@ -11,7 +11,8 @@ import {
 import { PreselectedFileTypes } from './configuration';
 import { getExifCreatedDate } from './exif-date';
 import { FileWithCreated } from './types';
-import { replaceDateOnFiles } from './utils';
+import { replaceDateOnFiles, addDestinationDir } from './utils';
+import { resolve } from 'path';
 
 export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   const spinner = ora({
@@ -64,7 +65,11 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   console.log(`Exif files found: ${exifFiles}, non exif files: ${nonExifFiles}`);
 
   const filesWithCreated = replaceDateOnFiles(filesWithStats, exifFileDates);
-  filesWithCreated.forEach((file) => {
-    console.log(`File: ${file.fileName} | date: ${file.birthtime}`);
-  });
+
+  const filesWithDest = addDestinationDir(resolve(dest), filesWithCreated);
+  console.log(`Will copy ${filesWithDest.length} files`);
+  const size = filesWithDest.reduce((acum, file) => {
+    return acum + file.size;
+  }, 0);
+  console.log(`For a size of ${Math.floor(size / (1024 * 1024))}MB`);
 }
