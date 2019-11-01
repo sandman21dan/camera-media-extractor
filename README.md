@@ -1,6 +1,7 @@
 # camera-media-extractor
 
 [![Build Status](https://travis-ci.org/sandman21dan/camera-media-extractor.svg?branch=master)](https://travis-ci.org/sandman21dan/camera-media-extractor)
+[![npm version](https://badge.fury.io/js/camera-media-extractor.svg)](https://badge.fury.io/js/camera-media-extractor)
 
 A node based command line tool to extract photos and videos
 from your camera and mobile phone, and tidy them up into tidy
@@ -33,14 +34,29 @@ Note: this will not delete any files from your source memory
 
 ## How to use
 
+
+### Install from npm
+
+1. Install
+```sh
+npm install -g camera-media-extractor
+```
+
+### Install from github
+
 In a nutshell:
 
 1. Clone this repo
+```sh
+git clone https://github.com/sandman21dan/camera-media-extractor.git
+```
 
 2. Run the following on the console:
 ```sh
 npm i && npm run build && npm link
 ```
+
+### Use
 
 3. To extract files let's say from a memory card located in `/mnt/f/`
 to your pictures folder located in `/home/daniel/Pictures`
