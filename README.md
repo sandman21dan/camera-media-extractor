@@ -7,6 +7,8 @@ A node based command line tool to extract photos and videos
 from your camera and mobile phone, and tidy them up into tidy
 dated folders
 
+![](demo.gif)
+
 ## Why?
 
 The reason I built this piece of software is due to Google
