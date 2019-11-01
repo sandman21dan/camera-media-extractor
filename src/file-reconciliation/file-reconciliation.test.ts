@@ -1,15 +1,32 @@
 import { resolve } from 'path';
-import { findRegularFilesInDir, getFileStats } from '../file-utils';
 import { addDestinationDir } from '../utils';
 import { filterExistingFiles } from './';
 
 describe('filterExistingFiles()', () => {
   it('filters out existing files in expected dated folders', async () => {
-    const files = await findRegularFilesInDir(resolve(__dirname, './test/src'));
-
-    const filesWithStats = await Promise.all(files.map((fileName) => {
-      return getFileStats(fileName);
-    }));
+    const mockFileCreationDate = new Date(2019, 4, 22, 2, 30, 2);
+    const filesWithStats = [
+      {
+        fileName: `${__dirname}/test/src/file_1.txt`,
+        size: 1024,
+        birthtime: mockFileCreationDate,
+      },
+      {
+        fileName: `${__dirname}/test/src/file_2.txt`,
+        size: 1024,
+        birthtime: mockFileCreationDate,
+      },
+      {
+        fileName: `${__dirname}/test/src/file_3.groovy`,
+        size: 1024,
+        birthtime: mockFileCreationDate,
+      },
+      {
+        fileName: `${__dirname}/test/src/file_4.txt`,
+        size: 1024,
+        birthtime: mockFileCreationDate,
+      },
+    ];
 
     const filesWithDest = addDestinationDir(resolve(__dirname, './test/dest'), filesWithStats);
 
