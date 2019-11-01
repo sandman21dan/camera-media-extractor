@@ -5,6 +5,9 @@
   "bin": {
     "camera-media-extractor": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "main": "index.js",
   "scripts": {
     "build:watch": "tsc --watch",
