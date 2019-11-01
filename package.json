@@ -21,24 +21,24 @@
   "dependencies": {
     "exif": "^0.6.0",
     "find": "^0.3.0",
-    "jest": "^24.7.1",
-    "ora": "^3.4.0",
-    "prompts": "^2.0.4",
+    "jest": "^24.9.0",
+    "ora": "^4.0.2",
+    "prompts": "^2.2.1",
     "randomstring": "^1.1.5",
-    "yargs": "^13.2.2"
+    "yargs": "^14.2.0"
   },
   "devDependencies": {
     "@types/exif": "^0.6.0",
     "@types/find": "^0.2.1",
-    "@types/jest": "^24.0.12",
-    "@types/node": "^11.13.6",
+    "@types/jest": "^24.0.21",
+    "@types/node": "^12.12.5",
     "@types/prompts": "^2.4.0",
     "@types/randomstring": "^1.1.6",
-    "@types/rimraf": "^2.0.2",
-    "rimraf": "^2.6.3",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.1.0",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.4"
+    "@types/rimraf": "^2.0.3",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
   }
 }
