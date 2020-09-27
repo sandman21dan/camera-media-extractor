@@ -7,6 +7,8 @@ import {
   filterFilesByType,
   getFileTypeChoices,
   getFileStats,
+  getExtensionTypeCounts,
+  MultiSelectChoice,
 } from './file-utils';
 import { PreselectedFileTypes } from './configuration';
 import { getExifCreatedDate } from './exif-date';
@@ -29,11 +31,22 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   const fileTypes = getExtensionTypes(files);
   console.log(`Found ${fileTypes.length} file types:`);
 
+  const fileTypeCounts = getExtensionTypeCounts(fileTypes, files);
+
+  const choices = getFileTypeChoices(fileTypes, PreselectedFileTypes);
+
+  const fileCountAnnotatedChoices: MultiSelectChoice[] = choices.map((choice) => {
+    return {
+      ...choice,
+      title: `${choice.title} (${(fileTypeCounts as any)[choice.value]})`,
+    };
+  });
+
   const chosenFileTypes = await prompts({
     type: 'multiselect',
     name: 'value',
     message: 'Choose file types to copy',
-    choices: getFileTypeChoices(fileTypes, PreselectedFileTypes),
+    choices: fileCountAnnotatedChoices,
   });
 
   const filesToCopy = filterFilesByType(files, chosenFileTypes.value);

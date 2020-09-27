@@ -29,6 +29,26 @@ export function getExtensionTypes(files: string[]): string[] {
   return typesList;
 }
 
+export function getExtensionTypeCounts(fileTypes: string[], files: string[]): object {
+  const fileTypeCounts: any = {};
+
+  for (const fileType of fileTypes) {
+    fileTypeCounts[fileType] = 0;
+  }
+
+  files.forEach((fileName) => {
+    const extension = extname(fileName).toLowerCase();
+
+    for (const fileType of fileTypes) {
+      if (fileType === extension) {
+        fileTypeCounts[fileType]++;
+      }
+    }
+  });
+
+  return fileTypeCounts;
+}
+
 export interface MultiSelectChoice {
   title: string;
   value: string;

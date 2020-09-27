@@ -5,6 +5,7 @@ import {
   getFileTypeChoices,
   MultiSelectChoice,
   getFileStats,
+  getExtensionTypeCounts,
 } from '.';
 import { resolve } from 'path';
 import { FileWithStats } from '../types';
@@ -52,6 +53,39 @@ describe('getExtensionTypes', () => {
       '.png',
       '.csv',
     ]);
+  });
+});
+
+describe('getExtensionTypeCounts', () => {
+  it('returns the file counts for each file type', () => {
+    const fileTypes = [
+      '.txt',
+      '.jpg',
+      '.png',
+      '.csv',
+    ];
+
+    const files = [
+      'names.txt',
+      'beach.jpg',
+      'logo.png',
+      'landscape.jpg',
+      'landscape3.jpg',
+      'list.txt',
+      'records.csv',
+      'landscape3.JPG',
+      'report.txt',
+      'zubarb.jpg',
+    ];
+
+    const expectedResult = {
+      '.txt': 3,
+      '.png': 1,
+      '.jpg': 5,
+      '.csv': 1,
+    };
+
+    expect(getExtensionTypeCounts(fileTypes, files)).toEqual(expectedResult);
   });
 });
 
