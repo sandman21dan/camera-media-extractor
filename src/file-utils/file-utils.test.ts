@@ -160,7 +160,7 @@ describe('filterFilesByType', () => {
 });
 
 describe('getFileStats', () => {
-  it('returns the expected stats map', async (done) => {
+  it('returns the expected stats map', async () => {
     const file = resolve(__dirname, './test/file_2.txt');
     const expectedStats: FileWithStats = {
       fileName: file,
@@ -170,7 +170,6 @@ describe('getFileStats', () => {
 
     const stats = await getFileStats(file);
     expect(stats).toEqual(expectedStats);
-    done();
   });
 
   it('rejects a promise on failure', (done) => {

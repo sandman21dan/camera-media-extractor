@@ -17,12 +17,11 @@ afterEach(() => {
 });
 
 describe('createDir', () => {
-  it('creates a dir if it does not exist', async (done) => {
+  it('creates a dir if it does not exist', async () => {
     const expectedPath = resolve(distDir, 'test-dir');
     await createDir(expectedPath);
     const dirExists = await fileExists(expectedPath);
     expect(dirExists).toEqual(true);
-    done();
   });
 
   it('does not fail if dir already exists', (done) => {
@@ -36,7 +35,7 @@ describe('createDir', () => {
 });
 
 describe('copyStatFile', () => {
-  it('copies a file from expected src to dist', async (done) => {
+  it('copies a file from expected src to dist', async () => {
     const file: FileWithStatsAndDest = {
       birthtime: new Date('2019-05-24T21:49:000Z'),
       dest: resolve(distDir, '2019-05-24', 'file_2.txt'),
@@ -47,6 +46,5 @@ describe('copyStatFile', () => {
     await copyStatFile(file);
     const copiedCorrectly = await fileExists(file.dest);
     expect(copiedCorrectly).toEqual(true);
-    done();
   });
 });

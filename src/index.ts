@@ -15,6 +15,6 @@ const argv = yargs
   .example('', 'camera-media-exctractor /mnt/f/photos /username/pictures/')
   .showHelpOnFail(true)
   .demandCommand(2)
-  .argv;
+  .parseSync();
 
-copyFiles(argv._[0], argv._[1], argv['dry-run'] || false);
+copyFiles(String(argv._[0]), String(argv._[1]), argv['dry-run'] || false);

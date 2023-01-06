@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`findRegularFilesInDir finds all regular in a given directory files 1`] = `
-Array [
+[
   "file_1.txt",
   "file_10.txt",
   "file_15.txt",
