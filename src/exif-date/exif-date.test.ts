@@ -18,7 +18,7 @@ describe('getExifCreatedDate', () => {
     getExifCreatedDate(file).then(() => {
       // fail the test
       expect(true).toBeFalsy();
-    }).catch((error) => {
+    }).catch(() => {
       // pass the test
       done();
     });

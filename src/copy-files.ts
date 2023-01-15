@@ -38,6 +38,7 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean) {
   const fileCountAnnotatedChoices: MultiSelectChoice[] = choices.map((choice) => {
     return {
       ...choice,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       title: `${choice.title} (${(fileTypeCounts as any)[choice.value]})`,
     };
   });

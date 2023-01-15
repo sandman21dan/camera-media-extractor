@@ -4,7 +4,7 @@ import { convertExifToUnix } from './date-converter';
 export function getExifCreatedDate(fileName: string): Promise<Date> {
   return new Promise((resolve, reject) => {
     try {
-      const exifImage = new ExifImage({ image: fileName }, (error, exifData) => {
+      new ExifImage({ image: fileName }, (error, exifData) => {
         if (error) {
           reject(error);
         } else {
