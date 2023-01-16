@@ -12,6 +12,8 @@ const argv = yargs
   .alias('dry-run', 'n')
   .default('n', false)
   .describe('n', 'dry run, shows files that would be copied')
+  .string('file-date-pattern')
+  .describe('file-date-pattern', 'parse date from file pattern if exif fails')
   .example('', 'camera-media-exctractor /mnt/f/photos /username/pictures/')
   .showHelpOnFail(true)
   .demandCommand(2)

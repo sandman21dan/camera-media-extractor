@@ -1,5 +1,5 @@
 import { FileWithStats, FileWithCreated, FileWithStatsAndDest } from '../types';
-import { replaceDateOnFiles, addDestinationDir } from './';
+import { replaceDateOnFiles, addDestinationDir, parseDateFromString, parseDateFormatString, DateParseFormat } from './';
 
 describe('replaceDateOnFiles()', () => {
   it('returns a new array of files with updated dates', () => {
@@ -48,5 +48,35 @@ describe('addDestinationDir()', () => {
     ];
 
     expect(addDestinationDir(dest, files)).toEqual(expectedResult);
+  });
+});
+
+describe('parseDateFormatString()', () => {
+  const testSuite = [
+    { input: 'yyyymmdd', expected: { regex: /(\d{4})(\d{2})(\d{2})/, order: [0, 1, 2] } },
+    { input: 'yyyyddmm', expected: { regex: /(\d{4})(\d{2})(\d{2})/, order: [0, 2, 1] } },
+    { input: 'ddmmyyyy', expected: { regex: /(\d{2})(\d{2})(\d{4})/, order: [2, 1, 0] } },
+    { input: '^ddmmyyyy.*', expected: { regex: /^(\d{2})(\d{2})(\d{4}).*/, order: [2, 1, 0] } },
+    { input: '.*yyyy_mm_dd.*', expected: { regex: /.*(\d{4})_(\d{2})_(\d{2}).*/, order: [0, 1, 2] } },
+  ];
+
+  for (const test of testSuite) {
+    expect(parseDateFormatString(test.input)).toEqual(test.expected);
+  }
+});
+
+
+describe('parseDateFromString()', () => {
+  it('parses dates from the expected input + formats', () => {
+    const testSuite: { format: DateParseFormat, input: string, expected: Date }[] = [
+      { format: { regex: /(\d{4})(\d{2})(\d{2})/, order: [0, 1, 2]}, input: '20110324', expected: new Date(2011, 2, 24) },
+      { format: { regex: /(\d{4})(\d{2})(\d{2})/, order: [0, 2, 1]}, input: '20112403', expected: new Date(2011, 2, 24) },
+      { format: { regex: /.*(\d{4})(\d{2})(\d{2}).*/, order: [0, 1, 2]}, input: 'abc20110324_other.txt', expected: new Date(2011, 2, 24) },
+      { format: { regex: /.*(\d{4})_(\d{2})_(\d{2}).*/, order: [0, 1, 2]}, input: 'abc2011_03_24_other.file', expected: new Date(2011, 2, 24) },
+    ];
+
+    for (const test of testSuite) {
+      expect(parseDateFromString(test.format, test.input)).toEqual(test.expected);
+    }
   });
 });
