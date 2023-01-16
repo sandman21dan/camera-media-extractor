@@ -18,7 +18,13 @@ import { resolve, basename } from 'path';
 import { copyStatFile } from './file-utils/file-copier';
 import { filterExistingFiles } from './file-reconciliation';
 
-export async function copyFiles(src: string, dest: string, dryRun: boolean, fileDatePattern: string, skipExif: boolean) {
+export async function copyFiles(
+  src: string,
+  dest: string,
+  dryRun: boolean,
+  fileDatePattern: string,
+  skipExif: boolean,
+) {
   const spinner = ora({
     text: 'Finding your files',
     spinner: 'line',
@@ -55,7 +61,6 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean, file
   const filesWithStats = await Promise.all(filesToCopy.map((fileName) => {
     return getFileStats(fileName);
   }));
-
 
   const jpgFiles = filterFilesByType(filesToCopy, ['.jpg', '.jpeg']);
 
