@@ -1,6 +1,6 @@
 {
   "name": "camera-media-extractor",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A media extractor from removable media",
   "bin": {
     "camera-media-extractor": "./dist/index.js"
