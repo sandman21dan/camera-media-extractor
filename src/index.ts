@@ -8,6 +8,9 @@ const argv = yargs
   .usage('Usage: camera-media-extractor [options] <source> <destination>')
   .help('help')
   .alias('help', 'h')
+  .boolean('skip-exif')
+  .default('skip-exif', false)
+  .describe('skip-exif', 'skip exif scanning on jpeg files')
   .boolean('n')
   .alias('dry-run', 'n')
   .default('n', false)
@@ -19,4 +22,4 @@ const argv = yargs
   .demandCommand(2)
   .argv;
 
-copyFiles(argv._[0], argv._[1], argv['dry-run'] || false, argv['file-date-pattern'] || '');
+copyFiles(argv._[0], argv._[1], argv['dry-run'] || false, argv['file-date-pattern'] || '', argv['skip-exif']);

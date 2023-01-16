@@ -18,7 +18,7 @@ import { resolve, basename } from 'path';
 import { copyStatFile } from './file-utils/file-copier';
 import { filterExistingFiles } from './file-reconciliation';
 
-export async function copyFiles(src: string, dest: string, dryRun: boolean, fileDatePattern: string) {
+export async function copyFiles(src: string, dest: string, dryRun: boolean, fileDatePattern: string, skipExif: boolean) {
   const spinner = ora({
     text: 'Finding your files',
     spinner: 'line',
@@ -56,6 +56,7 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean, file
     return getFileStats(fileName);
   }));
 
+
   const jpgFiles = filterFilesByType(filesToCopy, ['.jpg', '.jpeg']);
 
   spinner.text = 'Scanning file creation dates';
@@ -64,20 +65,22 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean, file
   let nonExifFiles = 0;
   const exifFileDates: FileWithCreated[] = [];
 
-  for (const [idx, file] of jpgFiles.entries()) {
-    spinner.text = `Scanning file creation dates ${idx + 1}..${jpgFiles.length}`;
+  if (!skipExif) {
+    for (const [idx, file] of jpgFiles.entries()) {
+      spinner.text = `Scanning file creation dates ${idx + 1}..${jpgFiles.length}`;
 
-    try {
-      const exifDate = await getExifCreatedDate(file);
-      exifFileDates.push({ fileName: file, created: exifDate });
-      exifFiles++;
-    } catch {
-      nonExifFiles++;
+      try {
+        const exifDate = await getExifCreatedDate(file);
+        exifFileDates.push({ fileName: file, created: exifDate });
+        exifFiles++;
+      } catch {
+        nonExifFiles++;
+      }
     }
-  }
-  spinner.stop();
+    spinner.stop();
 
-  console.log(`Exif files found: ${exifFiles}, non exif files: ${nonExifFiles}`);
+    console.log(`Exif files found: ${exifFiles}, non exif files: ${nonExifFiles}`);
+  }
 
   let filesWithCreated = replaceDateOnFiles(filesWithStats, exifFileDates, true);
 
