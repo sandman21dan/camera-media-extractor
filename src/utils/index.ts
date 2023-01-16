@@ -7,6 +7,7 @@ import { basename } from 'path';
 export function replaceDateOnFiles(
   annotatedFiles: FileWithStats[],
   filesWithCreated: FileWithCreated[],
+  isExif: boolean,
 ): FileWithStats[] {
   return annotatedFiles.map((annotatedFile) => {
     const newDateFile = filesWithCreated.find((fileWithDate) => {
@@ -17,6 +18,7 @@ export function replaceDateOnFiles(
       return {
         ...annotatedFile,
         birthtime: newDateFile.created,
+        isExif,
       };
     }
 
@@ -55,7 +57,7 @@ export function parseDateFormatString(format: string): DateParseFormat {
     'dd',
   ];
 
-  const partOrder: [number, number][] = [];
+  const partOrder: Array<[number, number]> = [];
   let regexFormat = format;
 
   parts.forEach((part, i) => {
@@ -63,8 +65,8 @@ export function parseDateFormatString(format: string): DateParseFormat {
     if (partIdx === -1) {
       throw new Error(`not found expected date format part "${part}"`);
     }
-    partOrder.push([partIdx, i])
-    regexFormat = regexFormat.replace(part, `(\\d{${part.length}})`)
+    partOrder.push([partIdx, i]);
+    regexFormat = regexFormat.replace(part, `(\\d{${part.length}})`);
   });
 
   partOrder.sort((a, b) => a[0] - b[0]);
@@ -83,7 +85,7 @@ export function parseDateFromString(format: DateParseFormat, input: string): Dat
   if (match === null) {
     throw new Error(`unable to parse date from ${input}`);
   } else {
-    const [year, month, day] = [1,2,3].map((regexIdx, i) => {
+    const [year, month, day] = [1, 2, 3].map((regexIdx, i) => {
       const orderIdx = format.order[i];
       const value = match[regexIdx];
       if (!value) {
@@ -92,7 +94,7 @@ export function parseDateFromString(format: DateParseFormat, input: string): Dat
 
       let intVal: number;
       try {
-        intVal = parseInt(value);
+        intVal = parseInt(value, 10);
       } catch (e) {
         throw new Error(`unable to parse date from ${input}`);
       }

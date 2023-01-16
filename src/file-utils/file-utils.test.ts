@@ -166,6 +166,7 @@ describe('getFileStats', () => {
       fileName: file,
       size: 1024,
       birthtime: expect.any(Date),
+      isExif: false,
     };
 
     const stats = await getFileStats(file);

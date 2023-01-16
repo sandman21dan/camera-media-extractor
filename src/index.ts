@@ -19,4 +19,4 @@ const argv = yargs
   .demandCommand(2)
   .argv;
 
-copyFiles(argv._[0], argv._[1], argv['dry-run'] || false);
+copyFiles(argv._[0], argv._[1], argv['dry-run'] || false, argv['file-date-pattern'] || '');

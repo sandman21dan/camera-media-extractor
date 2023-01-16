@@ -41,6 +41,7 @@ describe('copyStatFile', () => {
       birthtime: new Date('2019-05-24T21:49:000Z'),
       dest: resolve(distDir, '2019-05-24', 'file_2.txt'),
       fileName: resolve(__dirname, './test/file_2.txt'),
+      isExif: false,
       size: 1024,
     };
 

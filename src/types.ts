@@ -2,6 +2,7 @@ export interface FileWithStats {
   fileName: string;
   size: number;
   birthtime: Date;
+  isExif: boolean;
 }
 
 export interface FileWithCreated {

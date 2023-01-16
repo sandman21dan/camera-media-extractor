@@ -13,12 +13,12 @@ import {
 import { PreselectedFileTypes } from './configuration';
 import { getExifCreatedDate } from './exif-date';
 import { FileWithCreated } from './types';
-import { replaceDateOnFiles, addDestinationDir } from './utils';
+import { replaceDateOnFiles, addDestinationDir, parseDateFormatString, parseDateFromString } from './utils';
 import { resolve, basename } from 'path';
 import { copyStatFile } from './file-utils/file-copier';
 import { filterExistingFiles } from './file-reconciliation';
 
-export async function copyFiles(src: string, dest: string, dryRun: boolean) {
+export async function copyFiles(src: string, dest: string, dryRun: boolean, fileDatePattern: string) {
   const spinner = ora({
     text: 'Finding your files',
     spinner: 'line',
@@ -79,7 +79,25 @@ export async function copyFiles(src: string, dest: string, dryRun: boolean) {
 
   console.log(`Exif files found: ${exifFiles}, non exif files: ${nonExifFiles}`);
 
-  const filesWithCreated = replaceDateOnFiles(filesWithStats, exifFileDates);
+  let filesWithCreated = replaceDateOnFiles(filesWithStats, exifFileDates, true);
+
+  if (fileDatePattern !== '') {
+    const dateFormat = parseDateFormatString(fileDatePattern);
+
+    const filesWithDatesFromPattern: FileWithCreated[] = filesWithCreated
+      .filter((file) => !file.isExif)
+      .map((file) => {
+        const name = basename(file.fileName);
+        const fileDate = parseDateFromString(dateFormat, name);
+
+        return {
+          fileName: file.fileName,
+          created: fileDate,
+        };
+      });
+
+    filesWithCreated = replaceDateOnFiles(filesWithStats, filesWithDatesFromPattern, false);
+  }
 
   const filesWithDest = addDestinationDir(resolve(dest), filesWithCreated);
   const filteredFilesWithDest = await filterExistingFiles(filesWithDest);

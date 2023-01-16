@@ -88,6 +88,7 @@ export function getFileStats(fileName: string): Promise<FileWithStats> {
           fileName,
           size: stats.size,
           birthtime: new Date(stats.birthtime),
+          isExif: false,
         });
       } else {
         reject(error);
