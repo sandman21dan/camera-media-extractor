@@ -114,4 +114,15 @@ describe('parseDateFromString()', () => {
       expect(parseDateFromString(test.format, test.input)).toEqual(test.expected);
     }
   });
+
+  it('parses dates in UTC to avoid shifts during conversions', () => {
+      const format: DateParseFormat = {
+        regex: /(\d{4})(\d{2})(\d{2})/,
+        order: [0, 1, 2],
+      };
+      const input = '20110324';
+      const result = parseDateFromString(format, input);
+      expect(result).toEqual(new Date(2011,2, 24));
+      expect(result.getTimezoneOffset()).toEqual(0);
+  });
 });

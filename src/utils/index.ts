@@ -108,6 +108,7 @@ export function parseDateFromString(format: DateParseFormat, input: string): Dat
       .sort((a, b) => a[0] - b[0])
       .map((v) => v[1]);
 
-    return new Date(year, month, day);
+    // Time in set to UTC to avoid date shifting when converting to ISO timestamp
+    return new Date(Date.UTC(year, month, day));
   }
 }
